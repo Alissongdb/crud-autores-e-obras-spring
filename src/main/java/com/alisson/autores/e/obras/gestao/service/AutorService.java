@@ -23,8 +23,18 @@ public class AutorService {
     }
 
     public Autor cadastrarAutor(Autor autor) {
+        try {
+            if (autor.getCpf() == null
+                    || autor.getCpf().toString().length() != 11) {
+                throw new IllegalArgumentException("Número do CPF inválido! O CPF deve conter 11 dígitos e não pode ser vazio, [CPF INFORMADO]: " + autor.getCpf());
+            }
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
+
         return autorRepository.save(autor);
     }
+
 
     public void deletarAutor(Long id) {
         autorRepository.deleteById(id);
